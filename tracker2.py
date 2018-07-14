@@ -5,7 +5,7 @@ import time
 
 cap = cv2.VideoCapture(0)
 
-def find_circles(sigma=0.33):
+def find_circles(sigma=0.22):
     while(True):
         # ret -> boolean
         # img -> image matrix
@@ -17,8 +17,6 @@ def find_circles(sigma=0.33):
         )
 
         gray = cv2.medianBlur(gray, 5)
-
-
         kernel = np.ones((3,3),np.uint8)
 
         gray = cv2.dilate(gray, kernel, iterations=2)
@@ -35,8 +33,8 @@ def find_circles(sigma=0.33):
         upper = int(min(255, (1.0 + sigma) * v))
         gray = cv2.Canny(gray, lower, upper)
 
+        # TODO: ajust Canny
         cv2.imshow('after canny', gray)
-
 
         circles = cv2.HoughCircles(gray,
             cv2.HOUGH_GRADIENT,
@@ -55,7 +53,6 @@ def find_circles(sigma=0.33):
                 cv2.circle(cimg, (i[0],i[1]), 2, (0,0,255), 3)
 
             cv2.imshow('frame', cimg)
-
 
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
