@@ -61,9 +61,12 @@ def find_circles():
         except :
             print('no circles')
         else:
+            # when two circles exactly are detected, draw a line between them
+            if len(circles[0]) == 2:
+                cv2.line(cimg, (circles[0][0][0], circles[0][0][1]),(circles[0][1][0], circles[0][1][1]), (255, 0, 0), 3)
             for i in circles[0, :]:
                 cv2.circle(cimg, (i[0],i[1]), i[2], (0, 255, 0), 2)
-                cv2.circle(cimg, (i[0],i[1]), 2, (0,0,255), 3)
+                cv2.circle(cimg, (i[0],i[1]), 1, (0,0,255), 3)
 
             cv2.imshow('frame', cimg)
 
